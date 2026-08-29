@@ -1,0 +1,50 @@
+name: Retrain model
+
+on:
+  workflow_dispatch:
+    inputs:
+      trials:
+        description: "Optuna tuning trials"
+        required: true
+        default: "25"
+  schedule:
+    - cron: "0 2 * * 0" # weekly Sunday 02:00 UTC
+
+jobs:
+  train:
+    name: Train + evaluate champion
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements.txt
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Train with tuning
+        run: python -m ml_pipeline.pipeline --tune-trials ${{ inputs.trials || 25 }}
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: churn-model-artifacts
+          path: |
+            models/*
+            reports/*
+          retention-days: 30
+
+      - name: Report champion metrics
+        run: |
+          python - <<'EOF'
+          import json
+          m = json.load(open("models/meta.json"))
+          t = json.load(open("models/metrics.json"))
+          print(f"champion={m['model']} run_id={m['run_id']} roc_auc={t['roc_auc']:.4f} f1={t['f1']:.4f}")
+          EOF

@@ -1,0 +1,15 @@
+{
+  "model": "xgboost",
+  "model_label": "Xgboost",
+  "trained_at": "2026-08-30T01:15:44.867182+05:30",
+  "run_id": "2315e11aae90",
+  "n_rows": 7032,
+  "n_features": 20,
+  "dataset": "telco_churn.csv",
+  "python": "3.14.7",
+  "packages": {
+    "sklearn": "1.9.0",
+    "pandas": "3.0.5",
+    "numpy": "2.5.2"
+  }
+}

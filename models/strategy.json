@@ -1,0 +1,43 @@
+{
+  "contract_impact": {
+    "current_avg_churn": 28.33,
+    "hypothetical_avg_churn_after_contract": 24.33,
+    "month_to_month_share": 56.15,
+    "one_year_share": 20.61,
+    "two_year_share": 23.24,
+    "impact_note": "Migrating month-to-month customers to one-year contracts historically reduces average churn probability by roughly 4 percentage points."
+  },
+  "top_risk_segments": [
+    {
+      "segment": "Month-to-month",
+      "customers": 790,
+      "churn_rate": 44.67,
+      "monthly_charges_avg": 65.62,
+      "expected_monthly_loss": 25377.36,
+      "predicted_churners": 323
+    },
+    {
+      "segment": "One year",
+      "customers": 290,
+      "churn_rate": 11.79,
+      "monthly_charges_avg": 66.18,
+      "expected_monthly_loss": 2906.5,
+      "predicted_churners": 0
+    },
+    {
+      "segment": "Two year",
+      "customers": 327,
+      "churn_rate": 3.54,
+      "monthly_charges_avg": 58.13,
+      "expected_monthly_loss": 895.04,
+      "predicted_churners": 0
+    }
+  ],
+  "retention_roi": {
+    "customers_targeted": 213,
+    "saved_customers": 74.5,
+    "campaign_cost": 7455.0,
+    "retained_value_annual": 69750.24,
+    "roi": 8.356
+  }
+}

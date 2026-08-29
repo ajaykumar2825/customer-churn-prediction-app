@@ -1,0 +1,98 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+  Churn Intelligence — dark luxury design tokens.
+  Background #050816 · Cards #0F172A · Borders #1E293B
+*/
+@layer base {
+  :root {
+    --background: 231 63% 5%;
+    --foreground: 0 0% 100%;
+    --card: 222 47% 11%;
+    --card-foreground: 0 0% 100%;
+    --popover: 222 47% 9%;
+    --popover-foreground: 0 0% 93%;
+    --primary: 221 83% 53%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 217 33% 15%;
+    --secondary-foreground: 210 40% 90%;
+    --muted: 217 33% 14%;
+    --muted-foreground: 215 20% 70%;
+    --accent: 217 33% 17%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 217 33% 17%;
+    --input: 217 33% 18%;
+    --ring: 221 83% 53%;
+    --radius: 1rem;
+
+    --success: 158 64% 52%;
+    --warning: 38 95% 57%;
+    --danger: 0 84% 60%;
+    --cyan: 189 94% 43%;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "cv11", "ss01";
+  }
+
+  ::selection {
+    background: hsl(var(--primary) / 0.35);
+  }
+}
+
+@layer utilities {
+  .glass {
+    background: hsl(var(--card) / 0.72);
+    backdrop-filter: blur(18px) saturate(140%);
+  }
+
+  .text-gradient {
+    background: linear-gradient(120deg, #ffffff 0%, #cbd5e1 55%, hsl(var(--cyan)) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .shimmer {
+    position: relative;
+    overflow: hidden;
+  }
+  .shimmer::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(90deg, transparent, hsl(var(--primary) / 0.08), transparent);
+    animation: shimmer 1.6s infinite;
+  }
+}
+
+/* Professional custom scrollbar */
+::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: hsl(217 33% 22%);
+  border-radius: 9999px;
+  border: 2px solid hsl(231 63% 5%);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(217 33% 30%);
+}

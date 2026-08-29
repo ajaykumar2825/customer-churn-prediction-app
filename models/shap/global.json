@@ -1,0 +1,114 @@
+{
+  "expected_value": -0.9437215924263,
+  "n_rows": 800,
+  "importances": [
+    {
+      "feature": "contract_Month-to-month",
+      "importance": 0.6143583655357361
+    },
+    {
+      "feature": "tenure",
+      "importance": 0.36774757504463196
+    },
+    {
+      "feature": "internet_service_Fiber optic",
+      "importance": 0.22364141047000885
+    },
+    {
+      "feature": "payment_method_Electronic check",
+      "importance": 0.16886356472969055
+    },
+    {
+      "feature": "contract_Two year",
+      "importance": 0.16194868087768555
+    },
+    {
+      "feature": "total_charges",
+      "importance": 0.1427314430475235
+    },
+    {
+      "feature": "monthly_charges",
+      "importance": 0.13494236767292023
+    },
+    {
+      "feature": "internet_service_No",
+      "importance": 0.1286407709121704
+    },
+    {
+      "feature": "avg_monthly_charge",
+      "importance": 0.11062697321176529
+    },
+    {
+      "feature": "online_security",
+      "importance": 0.105062335729599
+    },
+    {
+      "feature": "paperless_billing",
+      "importance": 0.0961751863360405
+    },
+    {
+      "feature": "tech_support",
+      "importance": 0.07330190390348434
+    },
+    {
+      "feature": "streaming_tv",
+      "importance": 0.06610426306724548
+    },
+    {
+      "feature": "streaming_movies",
+      "importance": 0.06537188589572906
+    },
+    {
+      "feature": "multi_line",
+      "importance": 0.05728299543261528
+    },
+    {
+      "feature": "dependents",
+      "importance": 0.04534356668591499
+    },
+    {
+      "feature": "senior_citizen",
+      "importance": 0.03879754617810249
+    },
+    {
+      "feature": "online_backup",
+      "importance": 0.027339689433574677
+    },
+    {
+      "feature": "contract_One year",
+      "importance": 0.025813482701778412
+    },
+    {
+      "feature": "internet_service_DSL",
+      "importance": 0.012113486416637897
+    },
+    {
+      "feature": "total_services",
+      "importance": 0.006558303255587816
+    },
+    {
+      "feature": "gender_female",
+      "importance": 0.0039611272513866425
+    },
+    {
+      "feature": "payment_method_Mailed check",
+      "importance": 0.0031583223026245832
+    },
+    {
+      "feature": "payment_method_Bank transfer (automatic)",
+      "importance": 0.0022238416131585836
+    },
+    {
+      "feature": "partner",
+      "importance": 0.001604779507033527
+    },
+    {
+      "feature": "payment_method_Credit card (automatic)",
+      "importance": 0.001557168085128069
+    },
+    {
+      "feature": "device_protection",
+      "importance": 0.0010735768591985106
+    }
+  ]
+}

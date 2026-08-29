@@ -1,0 +1,167 @@
+{
+  "revenue_at_risk": {
+    "at_risk_customers": 323,
+    "high_risk_customers": 71,
+    "expected_monthly_loss": 29178.9,
+    "expected_annual_loss": 350146.84,
+    "total_monthly_revenue": 90039.85,
+    "percent_revenue_at_risk": 32.41
+  },
+  "clv": 225.86262324504662,
+  "retention_roi": {
+    "customers_targeted": 213,
+    "saved_customers": 74.5,
+    "campaign_cost": 7455.0,
+    "retained_value_annual": 69750.24,
+    "roi": 8.356
+  },
+  "segments": {
+    "contract": [
+      {
+        "segment": "Month-to-month",
+        "customers": 790,
+        "churn_rate": 44.67,
+        "monthly_charges_avg": 65.62,
+        "expected_monthly_loss": 25377.36,
+        "predicted_churners": 323
+      },
+      {
+        "segment": "One year",
+        "customers": 290,
+        "churn_rate": 11.79,
+        "monthly_charges_avg": 66.18,
+        "expected_monthly_loss": 2906.5,
+        "predicted_churners": 0
+      },
+      {
+        "segment": "Two year",
+        "customers": 327,
+        "churn_rate": 3.54,
+        "monthly_charges_avg": 58.13,
+        "expected_monthly_loss": 895.04,
+        "predicted_churners": 0
+      }
+    ],
+    "payment_method": [
+      {
+        "segment": "Electronic check",
+        "customers": 458,
+        "churn_rate": 46.77,
+        "monthly_charges_avg": 76.37,
+        "expected_monthly_loss": 16657.18,
+        "predicted_churners": 219
+      },
+      {
+        "segment": "Mailed check",
+        "customers": 336,
+        "churn_rate": 22.9,
+        "monthly_charges_avg": 43.59,
+        "expected_monthly_loss": 4158.01,
+        "predicted_churners": 52
+      },
+      {
+        "segment": "Credit card (automatic)",
+        "customers": 306,
+        "churn_rate": 18.13,
+        "monthly_charges_avg": 65.56,
+        "expected_monthly_loss": 4299.8,
+        "predicted_churners": 27
+      },
+      {
+        "segment": "Bank transfer (automatic)",
+        "customers": 307,
+        "churn_rate": 16.94,
+        "monthly_charges_avg": 66.3,
+        "expected_monthly_loss": 4063.91,
+        "predicted_churners": 25
+      }
+    ],
+    "internet_service": [
+      {
+        "segment": "Fiber optic",
+        "customers": 613,
+        "churn_rate": 44.27,
+        "monthly_charges_avg": 90.63,
+        "expected_monthly_loss": 23654.72,
+        "predicted_churners": 267
+      },
+      {
+        "segment": "DSL",
+        "customers": 482,
+        "churn_rate": 20.36,
+        "monthly_charges_avg": 57.89,
+        "expected_monthly_loss": 4922.05,
+        "predicted_churners": 56
+      },
+      {
+        "segment": "No",
+        "customers": 312,
+        "churn_rate": 9.35,
+        "monthly_charges_avg": 21.09,
+        "expected_monthly_loss": 602.13,
+        "predicted_churners": 0
+      }
+    ],
+    "tenure_group": [
+      {
+        "segment": "1-6m",
+        "customers": 322,
+        "churn_rate": 54.03,
+        "monthly_charges_avg": 55.23,
+        "expected_monthly_loss": 10993.12,
+        "predicted_churners": 196
+      },
+      {
+        "segment": "6-12m",
+        "customers": 129,
+        "churn_rate": 37.57,
+        "monthly_charges_avg": 56.95,
+        "expected_monthly_loss": 3504.52,
+        "predicted_churners": 44
+      },
+      {
+        "segment": "1-2y",
+        "customers": 206,
+        "churn_rate": 30.44,
+        "monthly_charges_avg": 61.42,
+        "expected_monthly_loss": 4875.26,
+        "predicted_churners": 52
+      },
+      {
+        "segment": "2-4y",
+        "customers": 315,
+        "churn_rate": 20.84,
+        "monthly_charges_avg": 64.81,
+        "expected_monthly_loss": 5423.55,
+        "predicted_churners": 25
+      },
+      {
+        "segment": "4y+",
+        "customers": 435,
+        "churn_rate": 11.0,
+        "monthly_charges_avg": 73.2,
+        "expected_monthly_loss": 4382.46,
+        "predicted_churners": 6
+      }
+    ]
+  },
+  "contract_impact": {
+    "current_avg_churn": 28.33,
+    "hypothetical_avg_churn_after_contract": 24.33,
+    "month_to_month_share": 56.15,
+    "one_year_share": 20.61,
+    "two_year_share": 23.24,
+    "impact_note": "Migrating month-to-month customers to one-year contracts historically reduces average churn probability by roughly 4 percentage points."
+  },
+  "scores": {
+    "mean_probability": 0.2833324372768402,
+    "churn_rate_observed": 0.2658137882018479
+  },
+  "top_risk_customer_sample": {
+    "customer_id": "5178-LMXOP",
+    "probability": 0.8888506293296814,
+    "contract": "Month-to-month",
+    "monthly_charges": 95.1,
+    "tenure": 1
+  }
+}
