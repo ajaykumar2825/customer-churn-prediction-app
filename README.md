@@ -72,11 +72,11 @@ Optional author details live in `.streamlit/secrets.toml` (copy from
 
 ```toml
 [app]
-owner = "Your name"
-company = "Your company"
-email = "you@example.com"
-github = "https://github.com/you"
-linkedin = "https://www.linkedin.com/in/you"
+owner = "Ajay Kumar Kanamu"
+company = "Personal Data Analytics Portfolio"
+email = "kanamuajaykumar@gmail.com"
+github = "https://github.com/ajaykumar2825"
+linkedin = "www.linkedin.com/in/ajay-kumar-kanamu-a32810286"
 ```
 
 ## Development
