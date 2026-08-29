@@ -140,7 +140,15 @@ def _default_nan(value: Any, fallback: float = 0.0) -> float:
     return fallback if value is None or (isinstance(value, float) and math.isnan(value)) else value
 
 
+from pathlib import Path
+import json
+
 def save_json(payload: dict[str, Any], path) -> None:
-    """Persist a JSON payload at ``path``."""
+    """Persist a JSON payload at `path`."""
+    path = Path(path)
+
+    # Create reports directory automatically
+    path.parent.mkdir(parents=True, exist_ok=True)
+
     with open(path, "w", encoding="utf-8") as f:
         json.dump(payload, f, indent=2, default=_default_nan)
