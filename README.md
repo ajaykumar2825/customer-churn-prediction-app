@@ -1,129 +1,96 @@
-<div align="center">
+# Churn Intelligence — Customer Churn Prediction Platform
 
-# 🔮 Churn Intelligence
+An end-to-end churn prediction platform shipped as a **single Streamlit application**.
+It trains, evaluates and explains a gradient-boosted champion model over the Telco
+Customer Churn dataset, then turns predictions into retention economics.
 
-**Production-grade customer churn prediction platform** — gradient-boosted ML, SHAP-explainable decisions, executive business analytics.
+```
+pip install -r requirements.txt
+streamlit run main.py
+```
 
-Next.js 15 · FastAPI · XGBoost · SHAP · PostgreSQL · Redis · Docker · GitHub Actions
-
-</div>
+Runs on **Python 3.12+** (developed on 3.14). No Node, Docker or database required.
 
 ---
 
-## Why this exists
+## What's inside
 
-Churn costs subscription businesses **an order of magnitude** more than acquisition. Churn Intelligence turns raw CRM data into a decision engine: predict **who** will churn, explain **why** the model believes it, and quantify **what it is worth** saving — all in one platform.
-
-| Dimension | Capability |
+| Page | Purpose |
 | --- | --- |
-| 🎯 **Predict** | Champion XGBoost model (test ROC-AUC **0.840**), tuned with Optuna over 8 candidate models |
-| 🕵️ **Explain** | Per-customer SHAP contributions surfaced in the UI — no black boxes |
-| 💰 **Monetize** | Revenue-at-risk, CLV, retention-campaign ROI and contract-migration plays |
-| 🧩 **Operate** | Zero-infrastructure demo mode, Postgres/SQLite with seeded reference data, 77% backend test coverage |
+| **Overview** | Live health of the whole book — churn rate, at-risk revenue, contract mix, tenure cohorts |
+| **Customer Analytics** | 11 sidebar filters slice the base; segment tables and distribution views per filter |
+| **Predict Churn** | Single-customer form, batch upload (CSV / XLSX / JSONL), downloadable scoring + HTML report |
+| **Model Performance** | Held-out metrics, threshold optimisation, calibration, lift/gain, confusion matrix, leaderboard, learning curve |
+| **SHAP Explainability** | Global SHAP summary + per-customer waterfall with plain-English narratives |
+| **Retention Strategy** | Revenue at risk, CLV, campaign ROI, contract-migration play, cohort heatmap |
+| **About Project** | Model card, methodology, feature catalogue, author block |
 
 ## Architecture
 
 ```
-frontend/     Next.js 15 dashboard (App Router, Tailwind, Recharts, shadcn-style UI kit)
-backend/      FastAPI service — prediction, explanation, analytics, rate limiting, audit log
-ml_pipeline/  Train → tune (Optuna) → evaluate → explain → business metrics → artifacts
-database/     Postgres schema + reference-seed script
-models/       Committed champion artifacts (clone-and-run, no training required)
-data/         Telco churn dataset (7,032 clean records, 20 engineered features)
+main.py                  one Streamlit entrypoint (st.navigation over 7 pages)
+├── pages/               the 7 product pages
+├── components/          layout, sidebar filters, metric cards, charts, tables, prediction card
+├── utils/               loaders, preprocessing, prediction, explainability, formatting, stats, reports
+├── ml_pipeline/         training + evaluation + SHAP + business analytics (standalone, reusable)
+├── models/              persisted artifacts (joblib pipelines + JSON metrics + SHAP plots)
+├── data/                data/telco_churn.csv (committed)
+├── reports/             generated HTML report snapshots (gitignored)
+├── scripts/             scripts/smoke_test.py — headless page runner (Streamlit AppTest)
+└── .streamlit/          config.toml theme + secrets.toml.example
 ```
 
-Client flow: `frontend` → `backend/api/v1` → model artifacts. When the API is unreachable the dashboard **gracefully renders realistic mock data** and flags demo mode.
+### Model
 
-## Quick start
+- **20 engineered features** derived from 21 raw columns (contract windows, add-on counts,
+  average spend, billing behaviour).
+- Champion **XGBoost** picked from 7 candidates tuned with **Optuna**; evaluated on a
+  stratified 20% hold-out.
+- Held-out results: ROC-AUC **0.8404**, PR-AUC **0.6511**, F1 **0.6349** at an
+  optimised threshold of **0.335**.
+- SHAP explains every prediction; `reports/generated/` holds shareable batch HTML reports.
 
-### Prerequisites
-- Python 3.10+ (**3.12 recommended** for production images; local dev verified on 3.14)
-- Node 20 · npm 10
-- Docker + Docker Compose (optional, for the full stack)
+### Reproducing the training job
 
-### Local development
+Artifacts are committed, so the app boots instantly from `models/`. To retrain and
+re-persist everything (including the analysed SHAP plots):
+
+```
+python -m ml_pipeline.pipeline            # quick run (no Optuna tuning)
+python -m ml_pipeline.pipeline --tune-trials 40
+```
+
+Missing artefacts trigger an automatic training fallback on first run.
+
+## Deployment
+
+**Streamlit Community Cloud** — point it at the repo and set `main.py` as the entrypoint.
+The app is fully deterministic (seeded), self-contained and uses zero external services.
+
+Optional author details live in `.streamlit/secrets.toml` (copy from
+`secrets.toml.example`):
+
+```toml
+[app]
+owner = "Your name"
+company = "Your company"
+email = "you@example.com"
+github = "https://github.com/you"
+linkedin = "https://www.linkedin.com/in/you"
+```
+
+## Development
 
 ```bash
-# 1. Python environment + dependencies
-python -m venv .venv
-.\.venv\Scripts\activate          # Windows
-source .venv/bin/activate         # macOS / Linux
-pip install -r requirements.txt
-
-# 2. Backend
-cd backend
-uvicorn app.main:app --reload     # http://localhost:8000/docs
-# or: python -m pytest tests      # 22 tests
-
-# 3. Frontend (separate terminal)
-cd frontend
-npm install
-npm run dev                       # http://localhost:3000
+python -m compileall -q main.py ml_pipeline components utils pages scripts
+python scripts/smoke_test.py        # renders every page headless via AppTest
 ```
 
-> No `DATABASE_URL` set? The API automatically uses the **in-memory demo store** — it re-scores the full dataset with the committed model at startup. Everything works with zero infrastructure.
+CI (`.github/workflows/ci.yml`) byte-compiles the sources, runs the AppTest smoke
+suite and re-runs the pipeline as a smoke job. A manual `retrain` workflow retrains
+the champion with Optuna and uploads artifacts.
 
-### Retrain the model (optional)
+## Data & licensing
 
-```bash
-python -m ml_pipeline.pipeline --tune-trials 25
-```
-
-Regenerates `models/*` artifacts and `reports/` — new champion is served automatically on backend restart.
-
-### Full stack via Docker
-
-```bash
-cp .env.example .env              # then edit secrets
-docker compose up --build
-```
-
-- Frontend → http://localhost:3000
-- API + OpenAPI docs → http://localhost:8000/docs
-- PostgreSQL → `localhost:5432` · Redis → `localhost:6379`
-
-## The model
-
-- **Champion:** XGBoost — test ROC-AUC **0.8404**, F1 **0.6349** @ probability threshold **0.335**
-- **Contract of truth:** 20 engineered features (`backend/app/ml_feature_catalogue.py`), mirrored in the frontend types and prediction form
-- **Explainability:** SHAP — global codes (the ggplot-equivalent importance) and local waterfall contributions per customer
-- **Business metrics:** revenue-at-risk, probability-weighted MRR, CLV, campaign ROI, segment rollups
-
-## Endpoints
-
-| Method | Path | Purpose |
-| --- | --- | --- |
-| `POST` | `/api/v1/predict` | Score one profile, return SHAP factors + retention guidance |
-| `POST` | `/api/v1/predict/batch` | Score up to 10,000 rows, summarize exposure |
-| `POST` | `/api/v1/explain` | Local SHAP explanation for any profile |
-| `GET` | `/api/v1/customers` | Search / filter / sort / paginate the base |
-| `GET` | `/api/v1/customers/{id}/explain` | Why a stored customer is flagged |
-| `GET` | `/api/v1/analytics` | Executive dashboard payload |
-| `GET` | `/api/v1/revenue-risk` `· /segments` | Business strategy payloads |
-| `GET` | `/api/v1/metrics` `· /feature-importance` `· /model/status` | Model registry |
-| `GET` | `/health` `· /ready` `· /ops/metrics` | Observability |
-
-## Reproducibility
-
-- **Checks:** `ruff` clean, 22/22 backend tests, frontend `eslint` · `tsc --noEmit` · `next build` green.
-- **GLP artifacts committed** (`models/` ≈ 1 MB) so the API and tests run without training.
-- **CI:** `.github/workflows/ci.yml` (unit + lint + build) and `retrain.yml` (weekly scheduled / manual retraining).
-- Deployment images pin **Python 3.12**; local dev verified on Python 3.14.
-
-## Configuration
-
-All knobs live in `backend/app/core/config.py` and `SettingsConfigDict` env mapping — copy `.env.example` → `.env`:
-
-| Variable | Default | Purpose |
-| --- | --- | --- |
-| `DATABASE_URL` | *(empty = demo mode)* | `postgresql+psycopg://…` or `sqlite:///…` |
-| `REDIS_URL` | *(empty = in-memory)* | Cache/rate-limit backing store |
-| `SECRET_KEY` | dev-only | **Override in production** |
-| `DEFAULT_THRESHOLD` / `HIGH_RISK_THRESHOLD` | `0.5` / `0.7` | Risk bucketing + decision threshold |
-| `SEED_ON_STARTUP` | `true` | Seed reference customers from the dataset |
-
-## License
-
-MIT — see [LICENSE](LICENSE).
-
-> Built on the classic IBM Telco Customer Churn dataset. Original prototype by Ajay Kumar; rebuilt as a production platform in 2026.
+Dataset: IBM/Kaggle `telco-customer-churn` (7,043 rows → 7,032 after cleaning).
+Code: MIT — see `LICENSE`.

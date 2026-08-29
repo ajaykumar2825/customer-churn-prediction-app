@@ -12,26 +12,15 @@ env/
 htmlcov/
 *.ipynb_checkpoints/
 
-# Node / Next.js
-node_modules/
-.next/
-out/
-dist/
-build/
-*.tsbuildinfo
-next-env.d.ts
-
-# Environment & secrets
-.env
-.env.local
-.env.*.local
-*.pem
-*.key
-secrets/
+# Streamlit
+.streamlit/secrets.toml
 
 # Data files (only the upstream Telco dataset is committed)
 *.csv
 !data/telco_churn.csv
+
+# Reports (generated)
+reports/generated/
 
 # Logs, OS, editors
 *.log
@@ -41,7 +30,3 @@ Thumbs.db
 .idea/
 .vscode/
 *.swp
-
-# Reports (generated)
-reports/*.json
-reports/*.md
